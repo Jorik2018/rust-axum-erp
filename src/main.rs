@@ -5,7 +5,7 @@ mod schema;
 
 use std::sync::Arc;
 
-use axum::http::{header::CONTENT_TYPE, Method};
+use axum::http::{header::{CONTENT_TYPE, AUTHORIZATION}, Method};
 
 use dotenv::dotenv;
 use tokio::net::TcpListener;
@@ -44,7 +44,7 @@ async fn main() {
     let cors = CorsLayer::new()
         .allow_methods([Method::GET, Method::POST])
         .allow_origin(Any)
-        .allow_headers([CONTENT_TYPE]);
+        .allow_headers([CONTENT_TYPE, AUTHORIZATION]);
 
     let app = create_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
 
