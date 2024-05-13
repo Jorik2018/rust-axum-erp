@@ -14,7 +14,7 @@ use crate::{
 };
 
 pub async fn region_list_handler(
-    Path((from, to)): Path<(i32, i32)>,
+    Path((from, limit)): Path<(i32, i32)>,
     opts: Option<Query<FilterOptions>>,
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
@@ -26,7 +26,7 @@ pub async fn region_list_handler(
     let notes = sqlx::query_as!(
         RegionModel,
         r#"SELECT codigo_dpto as code, nombre_dpto as name FROM drt_departamento LIMIT ? OFFSET ?"#,
-        to,
+        limit,
         offset as i32
     )
     .fetch_all(&data.db)

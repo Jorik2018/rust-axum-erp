@@ -31,7 +31,7 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
         )
         .nest(
             "/region",
-            Router::new().route("/:from/:to", get(region_list_handler)),
+            Router::new().route("/:from/:limit", get(region_list_handler)),
         )
         .with_state(app_state)
 }
