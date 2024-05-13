@@ -67,6 +67,5 @@ pub async fn region_list_handler(
         "size": total_count,
         "data": note_responses
     });
-
     Ok(Json(json_response))
 }
