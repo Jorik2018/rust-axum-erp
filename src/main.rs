@@ -50,7 +50,7 @@ async fn main() {
 
     println!("✅ Server started successfully at 0.0.0.0:{}", port);
 
-    let listener = TcpListener::bind(format!("127.0.0.1:{}", port)).await.unwrap();
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", port)).await.unwrap();
     axum::serve(listener, app.into_make_service())
         .await
         .unwrap();
