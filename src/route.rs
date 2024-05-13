@@ -16,9 +16,9 @@ use crate::{
 
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
-        .route("/api/healthcheck", get(health_check_handler))
+        .route("/healthcheck", get(health_check_handler))
         .nest(
-            "/api/notes",
+            "/notes",
             Router::new()
                 .route("/", post(create_note_handler))
                 .route("/", get(note_list_handler))
@@ -30,7 +30,7 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
                 ),
         )
         .nest(
-            "/api/directory/region",
+            "/region",
             Router::new().route("/:from/:to", get(region_list_handler)),
         )
         .with_state(app_state)
