@@ -63,7 +63,6 @@ pub async fn region_list_handler(
         .collect::<Vec<RegionModel>>();
 
     let json_response = serde_json::json!({
-        "status": "ok",
         "size": total_count,
         "data": note_responses
     });
