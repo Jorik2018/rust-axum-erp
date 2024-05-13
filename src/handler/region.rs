@@ -64,7 +64,7 @@ pub async fn region_list_handler(
 
     let json_response = serde_json::json!({
         "status": "ok",
-        "count": total_count,
+        "size": total_count,
         "data": note_responses
     });
 
