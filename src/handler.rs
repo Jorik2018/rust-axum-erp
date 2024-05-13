@@ -53,6 +53,20 @@ pub async fn region_list_handler(
         (StatusCode::INTERNAL_SERVER_ERROR, Json(error_response))
     })?;
 
+        // Query to count total regions
+        let total_count: i64 = sqlx::query_scalar!(
+            r#"SELECT COUNT(*) FROM drt_departamento"#
+        )
+        .fetch_one(&data.db)
+        .await
+        .map_err(|e| {
+            let error_response = serde_json::json!({
+                "status": "error",
+                "message": format!("Database error: { }", e),
+            });
+            (StatusCode::INTERNAL_SERVER_ERROR, Json(error_response))
+        })?;
+
     // Response
     let note_responses = notes
         .iter()
@@ -65,7 +79,7 @@ pub async fn region_list_handler(
 
     let json_response = serde_json::json!({
         "status": "ok",
-        "count": note_responses.len(),
+        "count": total_count,
         "data": note_responses
     });
 
