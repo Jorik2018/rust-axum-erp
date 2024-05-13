@@ -26,8 +26,7 @@ pub async fn health_check_handler() -> impl IntoResponse {
 }
 
 pub async fn region_list_handler(
-    Path(from): Path<i32>,
-    Path(to): Path<i32>,
+    Path((from, to)): Path<(i32, i32)>,
     opts: Option<Query<FilterOptions>>,
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
