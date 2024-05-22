@@ -6,11 +6,10 @@ use axum::{
 };
 
 use crate::{
-    handler::note::{
+    handler::{note::{
         create_note_handler, delete_note_handler, edit_note_handler, get_note_handler,
         health_check_handler, note_list_handler,
-    },
-    handler::region::region_list_handler,
+    }, region::{district_list_handler, province_list_handler, region_list_handler}},
     AppState,
 };
 
@@ -32,6 +31,14 @@ pub fn create_router(app_state: Arc<AppState>) -> Router {
         .nest(
             "/region",
             Router::new().route("/:from/:limit", get(region_list_handler)),
+        )
+        .nest(
+            "/province",
+            Router::new().route("/:from/:limit", get(province_list_handler)),
+        )
+        .nest(
+            "/district",
+            Router::new().route("/:from/:limit", get(district_list_handler)),
         )
         .with_state(app_state)
 }
